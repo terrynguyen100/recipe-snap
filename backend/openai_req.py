@@ -14,7 +14,7 @@ def openai_req(prompt):
         response = openai.Completion.create(
             engine="gpt-3.5-turbo",
             prompt=prompt,
-            max_tokens=1000  # You can adjust this value based on your needs
+            max_tokens=1000
         )
         return response.choices[0].text
     except Exception as e:
