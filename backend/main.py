@@ -1,7 +1,5 @@
-from fastapi import FastAPI, HTTPException
-import httpx
+from fastapi import FastAPI
 import configparser
-from bs4 import BeautifulSoup
 import openai
 from scrape_recipe import scrape_recipe
 
