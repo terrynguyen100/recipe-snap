@@ -2,8 +2,19 @@ from fastapi import FastAPI
 from helper.scrape_recipe import scrape_recipe
 # from helper.openai_req import get_openai_response
 from helper.helper import find_recipe_key, check_for_dict
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def read_root():
