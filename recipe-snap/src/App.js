@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LeftMenu from './components/LeftMenu';
+import View from './components/View';
+import axios from 'axios';
 
 function App() {
+  const [response, setResponse] = useState('Empty response');
+
+  const handleUrlSubmit = (url) => {
+    axios.get(`/get_recipe?url=${url}`)
+      .then((response) => {
+        setResponse(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      })
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="left-menu">
+        <LeftMenu onUrlSubmit={handleUrlSubmit} />
+      </div>
+      <div className="view">
+        <View response={response} />
+      </div>
     </div>
   );
 }
