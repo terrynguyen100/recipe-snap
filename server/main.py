@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from scrape_recipe import scrape_recipe
 from helper import find_recipe_key, check_for_dict
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn  # Import uvicorn
+import uvicorn 
 
 app = FastAPI()
 
