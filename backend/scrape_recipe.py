@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from urllib.parse import unquote
 
 def scrape_recipe(url):
     try:
-        response = requests.get(url)
+        decoded_url = unquote(url)
+        response = requests.get(decoded_url)
         response.raise_for_status()
         html = response.text
 
