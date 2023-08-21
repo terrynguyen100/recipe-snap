@@ -39,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "server-production-f33b.up.railway.app"
+  "proxy": "http://server-production-f33b.up.railway.app"
 }
