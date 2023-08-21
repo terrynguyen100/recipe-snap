@@ -8,7 +8,7 @@ function App() {
   const [response, setResponse] = useState('');
 
   const handleUrlSubmit = (url) => {
-    axios.get(`http://server-production-f33b.up.railway.app/get_recipe?url=${url}`)
+    axios.get(`https://server-production-f33b.up.railway.app/get_recipe?url=${url}`)
       .then((response) => {
         setResponse(response.data);
       })
