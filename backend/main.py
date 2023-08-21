@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from scrape_recipe import scrape_recipe
 from openai_req import get_openai_response
-from helper.helper import find_recipe_key
+from helper.helper import find_recipe_key, check_for_dict
 
 app = FastAPI()
 
@@ -47,9 +47,20 @@ async def get_recipe(url: str):
         metadata = scrape_recipe(url)
         ingredients = find_recipe_key(metadata, "recipeIngredient")
         instructions = find_recipe_key(metadata, "recipeInstructions")
-        return {  
+        
+        if (check_for_dict(ingredients) and check_for_dict(instructions)):
+            return {  
                   "ingredients": ingredients,
                   "instructions": instructions,
                 }
+        if (check_for_dict(ingredients)):
+            return {  
+                  "ingredients": ingredients,
+                }
+        if (check_for_dict(instructions)):
+            return {  
+                  "instructions": instructions,
+                }
+                
     except Exception as e:
         return {"Error": str(e)}
