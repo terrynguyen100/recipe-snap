@@ -18,25 +18,25 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "Please go to /docs to see the API documentation"}
 
-@app.get("/get_ingredients")
-async def get_ingredients(url: str):
-    try:
-        metadata = scrape_recipe(url)
-        ingredients = find_recipe_key(metadata, "recipeIngredient")
-        return {"ingredients": ingredients}
-    except Exception as e:
-        return {"Error": str(e)}
+# @app.get("/get_ingredients")
+# async def get_ingredients(url: str):
+#     try:
+#         metadata = scrape_recipe(url)
+#         ingredients = find_recipe_key(metadata, "recipeIngredient")
+#         return {"ingredients": ingredients}
+#     except Exception as e:
+#         return {"Error": str(e)}
 
-@app.get("/get_instructions")
-async def get_instructions(url: str):
-    try:
-        metadata = scrape_recipe(url)
-        instructions = find_recipe_key(metadata, "recipeInstructions")
-        return {"instructions": instructions}
-    except Exception as e:
-        return {"Error": str(e)}
+# @app.get("/get_instructions")
+# async def get_instructions(url: str):
+#     try:
+#         metadata = scrape_recipe(url)
+#         instructions = find_recipe_key(metadata, "recipeInstructions")
+#         return {"instructions": instructions}
+#     except Exception as e:
+#         return {"Error": str(e)}
 
 @app.get("/get_recipe")
 async def get_recipe(url: str):
@@ -61,9 +61,3 @@ async def get_recipe(url: str):
                 
     except Exception as e:
         return {"Error": str(e)}
-
-if __name__ == "__main__":
-    import os
-
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
