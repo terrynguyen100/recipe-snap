@@ -5,7 +5,7 @@ import View from './components/View';
 import axios from 'axios';
 
 function App() {
-  const [response, setResponse] = useState('Empty response');
+  const [response, setResponse] = useState('');
 
   const handleUrlSubmit = (url) => {
     axios.get(`/get_recipe?url=${url}`)
