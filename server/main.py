@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from scrape_recipe import scrape_recipe
-# from helper.openai_req import get_openai_response
 from helper import find_recipe_key, check_for_dict
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn  # Import uvicorn
 
 app = FastAPI()
 
@@ -18,20 +18,7 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return {"Hello" "World"}
-
-        # prompt = (
-        #     """
-        #     Here is the list of ingredients with each line is 1 group of ingredient. Each line will be formatted into a key-value pair.
-        #     Analyze each line and format them into a JSON format following this sample: if the line is "2 tablespoons butter, chicken fat or olive oil", then the JSON format will be "butter, chicken fat or olive oil" : "2 tablespoons.
-        #     Remember that each line will result in only 1 key-value pair.
-        #     Return the entire list of ingredients as a JSON such as "ingredients" : {}.
-
-        #     List of ingredients:\n 
-        #     """ +
-        #     "\n".join(ingredients)
-        # )
-        # extracted_info = get_openai_response(prompt)
+    return {"Hello": "World"}
 
 @app.get("/get_ingredients")
 async def get_ingredients(url: str):
@@ -41,7 +28,6 @@ async def get_ingredients(url: str):
         return {"ingredients": ingredients}
     except Exception as e:
         return {"Error": str(e)}
-
 
 @app.get("/get_instructions")
 async def get_instructions(url: str):
@@ -59,19 +45,25 @@ async def get_recipe(url: str):
         ingredients = find_recipe_key(metadata, "recipeIngredient")
         instructions = find_recipe_key(metadata, "recipeInstructions")
         
-        if (check_for_dict(ingredients) and check_for_dict(instructions)):
+        if check_for_dict(ingredients) and check_for_dict(instructions):
             return {  
                   "ingredients": ingredients,
                   "instructions": instructions,
                 }
-        if (check_for_dict(ingredients)):
+        if check_for_dict(ingredients):
             return {  
                   "ingredients": ingredients,
                 }
-        if (check_for_dict(instructions)):
+        if check_for_dict(instructions):
             return {  
                   "instructions": instructions,
                 }
                 
     except Exception as e:
         return {"Error": str(e)}
+
+if __name__ == "__main__":
+    import os
+
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
