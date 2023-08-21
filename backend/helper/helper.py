@@ -15,3 +15,9 @@ def find_recipe_key(data, targetKey):
             if result:
                 return result
     return None
+
+def check_for_dict(lst):
+    for item in lst:
+        if isinstance(item, dict):
+            return False
+    return True
