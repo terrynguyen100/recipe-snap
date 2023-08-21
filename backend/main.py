@@ -21,7 +21,7 @@ async def get_recipe():
         prompt = (
             """
             Here is the list of ingredients with each line is 1 group of ingredient. Each line will be formatted into a key-value pair.
-            Analyze each line and format them into a JSON format following this sample: if the line is "2 tablespoons butter, chicken fat or olive oil", then the JSON format will be {"butter, chicken fat or olive oil" : "2 tablespoons}.
+            Analyze each line and format them into a JSON format following this sample: if the line is "2 tablespoons butter, chicken fat or olive oil", then the JSON format will be "butter, chicken fat or olive oil" : "2 tablespoons.
             Remember that each line will result in only 1 key-value pair.
             Return the entire list of ingredients as a JSON such as "ingredients" : {}.
 
@@ -31,6 +31,6 @@ async def get_recipe():
         )
         extracted_info = get_openai_response(prompt)
 
-        return {extracted_info}
+        return extracted_info
     except Exception as e:
         return {"Error": str(e)}
